@@ -1,3 +1,7 @@
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
+
 import SplashWrapper from "@/components/utils/SplashWrapper";
 import ContextProvider from "@/context/ContextProvider";
 import UIProvider from "@/context/UIProvider";

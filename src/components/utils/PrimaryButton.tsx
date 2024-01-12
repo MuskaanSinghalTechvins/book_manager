@@ -15,7 +15,7 @@ const PrimaryButton = ({
 }: Props) => {
   return (
     <button
-      className={`px-4 py-2 rounded-[8px] bg-primary text-white font-semibold text-sm shadow-3xl w-full ${styles}`}
+      className={`px-4 py-2 rounded-[8px] bg-primary text-white font-semibold text-sm shadow-3xl ${styles}`}
       type={type}
       onClick={onClick}
     >

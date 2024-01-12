@@ -10,5 +10,5 @@ export interface Book {
   author: string;
   publication_year: string;
   genre: string;
-  id?: number;
+  id?: string;
 }

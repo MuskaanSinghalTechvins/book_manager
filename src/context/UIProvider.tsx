@@ -8,6 +8,7 @@ interface Props {
 interface UI {
   screen: string;
   visible: boolean;
+  assets: any;
 }
 
 interface actionObj {
@@ -17,9 +18,9 @@ interface actionObj {
 
 const reducer = (state: UI, action: actionObj) => {
   if (action.type === "OPEN_MODAL") {
-    return { visible: true, screen: action.payload };
+    return { ...state, visible: true, ...action.payload };
   } else if (action.type === "CLOSE_MODAL") {
-    return { visible: false, screen: "" };
+    return { ...state, visible: false, screen: "" };
   } else {
     return state;
   }
@@ -29,6 +30,7 @@ const UIProvider = ({ children }: Props) => {
   const [uiState, dispatch] = useReducer(reducer, {
     visible: false,
     screen: "",
+    assets: {},
   });
   return (
     <UIContext.Provider value={{ uiState, dispatch }}>

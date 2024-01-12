@@ -2,42 +2,42 @@ import { Book } from "@/types";
 
 export const List: Book[] = [
   {
-    id: 0,
+    id: "book-1",
     title: "Malgudi Days",
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
   },
   {
-    id: 1,
+    id: "book-2",
     title: "Malgudi Days",
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
   },
   {
-    id: 2,
+    id: "book-3",
     title: "Malgudi Days",
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
   },
   {
-    id: 3,
+    id: "book-4",
     title: "Malgudi Days",
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
   },
   {
-    id: 4,
+    id: "book-5",
     title: "Malgudi Days",
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
   },
   {
-    id: 5,
+    id: "book-6",
     title: "Malgudi Days",
     author: "RK Narayanan",
     publication_year: "2003",

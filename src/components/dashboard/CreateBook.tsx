@@ -1,16 +1,45 @@
-import { FormInput } from "@/types";
+import { Book, FormInput } from "@/types";
 import { Form, Formik } from "formik";
 import CustomInput from "../utils/CustomInput";
 import PrimaryButton from "../utils/PrimaryButton";
+import { useContext, useEffect, useState } from "react";
+import { Context, UIContext } from "@/context";
 
 const CreateBook = () => {
-  const initialValues = {};
-  const handleSubmit = () => {};
+  const { bookDispatcher } = useContext(Context);
+  const {
+    dispatch,
+    uiState: { assets = {} },
+  } = useContext(UIContext);
+  const [initialValues, setInitialValues] = useState<Book>({
+    title: "",
+    author: "",
+    publication_year: "",
+    genre: "",
+  });
+  const handleSubmit = (values: Book) => {
+    if (assets?.isEditable && values?.id) {
+      bookDispatcher({
+        type: "EDIT_BOOK",
+        payload: { book: values },
+      });
+    } else {
+      bookDispatcher({ type: "ADD_NEW_BOOK", payload: { book: values } });
+    }
+    dispatch({ type: "CLOSE_MODAL" });
+  };
+
+  useEffect(() => {
+    if (assets?.book && assets?.isEditable) {
+      setInitialValues(assets?.book);
+    }
+  }, [JSON.stringify(assets)]);
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      //   validationSchema={validationSchema}
+      enableReinitialize={true}
     >
       {({ errors, touched }: FormInput) => (
         <Form className="w-[400px] p-4 rounded-[10px] shadow-3xl bg-white">

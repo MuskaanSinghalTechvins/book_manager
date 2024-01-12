@@ -1,15 +1,19 @@
 import BookCard from "@/components/dashboard/BookCard";
 import DashboardWrapper from "@/components/dashboard/DashboardWrapper";
 import PrimaryButton from "@/components/utils/PrimaryButton";
-import { UIContext } from "@/context";
-import { List } from "@/data/bookList";
+import { Context, UIContext } from "@/context";
+import { Book } from "@/types";
 import { useContext } from "react";
 
 const Dashboard = () => {
   const { dispatch } = useContext(UIContext);
+  const { bookList } = useContext(Context);
 
   const openForm = () => {
-    dispatch({ type: "OPEN_MODAL", payload: "ADD_BOOK" });
+    dispatch({
+      type: "OPEN_MODAL",
+      payload: { screen: "ADD_BOOK", assets: {} },
+    });
   };
 
   return (
@@ -18,7 +22,7 @@ const Dashboard = () => {
         Add New Book +
       </PrimaryButton>
       <div className="grid grid-cols-3 gap-5 mt-8">
-        {List.map((book) => (
+        {bookList.map((book: Book) => (
           <BookCard book={book} key={book.id} />
         ))}
       </div>
