@@ -1,9 +1,9 @@
 import LoginForm from "@/components/auth/LoginForm";
-import { Inter } from "next/font/google";
+import { Lato } from "next/font/google";
 import Image from "next/image";
 import loginImg from "@/assets/login_img.jpg";
 
-const inter = Inter({ subsets: ["latin"] });
+
 
 export default function Login() {
   return (
@@ -15,7 +15,7 @@ export default function Login() {
           className="h-screen w-full object-cover opacity-60"
         />
       </div>
-      <div className="flex justify-start items-center pl-[50px]">
+      <div className="flex justify-start items-center pl-[50px] bg-primary bg-opacity-10">
         <LoginForm />
       </div>
     </div>

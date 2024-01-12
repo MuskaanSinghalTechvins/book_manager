@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Context } from ".";
 
 interface Props {
@@ -6,7 +6,12 @@ interface Props {
 }
 
 const ContextProvider = ({ children }: Props) => {
-  return <Context.Provider value={{}}>{children}</Context.Provider>;
+  const [initialLoading, setInitialLoading] = useState(true);
+  return (
+    <Context.Provider value={{ initialLoading, setInitialLoading }}>
+      {children}
+    </Context.Provider>
+  );
 };
 
 export default ContextProvider;

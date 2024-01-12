@@ -1,3 +1,4 @@
 import { createContext } from "react";
 // GLOBAL STORE
-export const Context = createContext({});
+const initVals: any = { initialLoading: false };
+export const Context = createContext(initVals);

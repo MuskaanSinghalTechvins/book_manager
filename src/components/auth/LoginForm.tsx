@@ -3,6 +3,7 @@ import CustomInput from "../utils/CustomInput";
 import { FormInput } from "@/types";
 import PrimaryButton from "../utils/PrimaryButton";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -15,6 +16,7 @@ const validationSchema = Yup.object({
 });
 
 const LoginForm = () => {
+  const router = useRouter();
   const initialValues = {
     email: "",
     password: "",
@@ -27,6 +29,8 @@ const LoginForm = () => {
       const uuid = crypto.randomUUID();
       // storing uuid in local storage
       localStorage.setItem("authorization", uuid);
+      // navigate to dashboard
+      router.replace("/dashboard");
     }
   };
 
