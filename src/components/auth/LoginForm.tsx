@@ -21,7 +21,13 @@ const LoginForm = () => {
   };
 
   const handleSubmit = (values: FormikValues) => {
-    console.log(values);
+    const { email, password } = values;
+    if (email && password) {
+      // generate random uuid
+      const uuid = crypto.randomUUID();
+      // storing uuid in local storage
+      localStorage.setItem("authorization", uuid);
+    }
   };
 
   return (
