@@ -4,6 +4,20 @@ import CustomInput from "../utils/CustomInput";
 import PrimaryButton from "../utils/PrimaryButton";
 import { useContext, useEffect, useState } from "react";
 import { Context, UIContext } from "@/context";
+import * as Yup from "yup";
+
+const schema = Yup.object({
+  title: Yup.string().required("This field is required"),
+  author: Yup.string()
+    .required("This field is required")
+    .matches(/^[a-zA-Z ]+$/),
+  publication_year: Yup.string()
+    .required("This field is required")
+    .matches(/^[1,2]{1}[0-9]{3}$/, "Please enter a valid year"),
+  genre: Yup.string()
+    .required("This field is required")
+    .matches(/^[a-zA-Z ]+$/),
+});
 
 const CreateBook = () => {
   const { bookDispatcher } = useContext(Context);
@@ -40,6 +54,7 @@ const CreateBook = () => {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       enableReinitialize={true}
+      validationSchema={schema}
     >
       {({ errors, touched }: FormInput) => (
         <Form className="w-[400px] p-4 rounded-[10px] shadow-3xl bg-white">
