@@ -19,7 +19,7 @@ const CustomInput = ({
 }: Props) => {
   return (
     <div className={containerStyles}>
-      <label className="text-sm mb-2 block">{label}</label>
+      <label className="text-sm mb-2 block font-semibold">{label}</label>
       <Field
         {...props}
         name={name}

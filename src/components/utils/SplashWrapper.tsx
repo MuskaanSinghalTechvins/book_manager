@@ -2,6 +2,7 @@ import { Context } from "@/context";
 import { useAuth } from "@/hooks/useAuth";
 import { Lato } from "next/font/google";
 import { ReactNode, useContext } from "react";
+import Modal from "./Modal";
 
 const lato = Lato({ weight: ["400"], preload: false });
 
@@ -23,7 +24,10 @@ const SplashWrapper = ({ children }: Props) => {
   return initialLoading ? (
     <SplashScreen />
   ) : (
-    <div className={lato.className}>{children}</div>
+    <div className={lato.className}>
+      {children}
+      <Modal />
+    </div>
   );
 };
 
