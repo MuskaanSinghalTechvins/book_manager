@@ -1,0 +1,66 @@
+import { Form, Formik, FormikValues } from "formik";
+import CustomInput from "../utils/CustomInput";
+import { FormInput } from "@/types";
+import PrimaryButton from "../utils/PrimaryButton";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email("Please enter a valid email address")
+    .required("This field is required"),
+  password: Yup.string()
+    .required("This field is required")
+    .min(7, "Atleast 7 characters are required")
+    .max(20, "Atmost 20 chars are allowed"),
+});
+
+const LoginForm = () => {
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const handleSubmit = (values: FormikValues) => {
+    console.log(values);
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ errors, touched }: FormInput) => (
+        <Form className="w-[400px] p-4 rounded-[10px] shadow-3xl bg-white bg-opacity-80">
+          <h2 className="text-center text-lg mb-5 font-semibold">
+            Sign Up / Sign In
+          </h2>
+          <CustomInput
+            {...{
+              errors,
+              touched,
+              name: "email",
+              label: "Email",
+              containerStyles: "mb-4",
+            }}
+          />
+          <CustomInput
+            {...{
+              errors,
+              touched,
+              name: "password",
+              label: "Password",
+              type: "password",
+              containerStyles: "mb-[30px]",
+            }}
+          />
+          <PrimaryButton styles="block mx-auto" type="submit">
+            Submit
+          </PrimaryButton>
+        </Form>
+      )}
+    </Formik>
+  );
+};
+
+export default LoginForm;
