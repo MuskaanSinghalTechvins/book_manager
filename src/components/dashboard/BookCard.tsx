@@ -1,5 +1,6 @@
 import { Context, UIContext } from "@/context";
 import { Book } from "@/types";
+import { formatDate } from "@/utility";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
@@ -8,7 +9,7 @@ interface Props {
   book: Book;
 }
 const BookCard = ({ book }: Props) => {
-  const { title, publication_year, genre, author, id } = book;
+  const { title, publication_year, genre, author, id, created_at } = book;
   const { dispatch } = useContext(UIContext);
   const { bookDispatcher } = useContext(Context);
 
@@ -31,10 +32,16 @@ const BookCard = ({ book }: Props) => {
       <p className="text-md text-primary text-opacity-85 font-semibold mb-1">
         {author}
       </p>
-      <p className="text-sm text-silver font-semibold">
-        <span className="text-primary font-medium">Published in:</span>&nbsp;
-        {publication_year}
-      </p>
+      <div className="flex justify-between items-center">
+        <p className="text-sm text-silver font-semibold">
+          <span className="text-primary font-medium">Published in:</span>&nbsp;
+          {publication_year}
+        </p>
+        <p className="text-sm text-silver font-semibold">
+          <span className="text-primary font-medium">Created On:</span>&nbsp;
+          {formatDate(created_at)}
+        </p>
+      </div>
 
       <div className="absolute top-3 right-3 space-x-3">
         <button onClick={editBook}>

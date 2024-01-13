@@ -1,63 +1,35 @@
 import { ReactNode, useReducer, useState } from "react";
 import { Context } from ".";
-import { Book } from "@/types";
+import { Book, GlobalState, action } from "@/types";
 import { List } from "@/data/bookList";
+import { CRUDReducer, OrderingReducer } from "./slices";
 
 interface Props {
   children: ReactNode;
 }
 
-interface State {
-  bookList: Book[];
+interface PageState {
+  start: number;
 }
 
 interface actionObj {
-  type: "ADD_NEW_BOOK" | "EDIT_BOOK" | "DELETE_BOOK";
+  type: action;
   payload: any;
 }
 
-const reducer = (state: State, action: actionObj) => {
+const reducer = (state: GlobalState, action: actionObj) => {
   const { type, payload } = action;
-  if (type === "ADD_NEW_BOOK") {
-    return {
-      ...state,
-      bookList: [
-        { id: crypto.randomUUID(), ...payload?.book },
-        ...state.bookList,
-      ],
-    };
-  } else if (type === "EDIT_BOOK") {
-    const bookId = payload.book.id;
-    const list = [...state.bookList];
-    const selectedBookIdx = state.bookList.findIndex(
-      (item) => item.id === bookId
-    );
-    if (selectedBookIdx >= 0) {
-      list[selectedBookIdx] = { ...list[selectedBookIdx], ...payload.book };
-    }
-
-    console.log(payload.book, list, selectedBookIdx);
-
-    return {
-      ...state,
-      bookList: list,
-    };
-  } else if (type === "DELETE_BOOK") {
-    const bookId = payload.bookId;
-    const list = state.bookList?.filter((item) => item.id !== bookId);
-    console.log(list);
-    return {
-      ...state,
-      bookList: list,
-    };
-  } else {
-    return state;
+  let updatedState = CRUDReducer(type, payload, state);
+  if (!updatedState) {
+    updatedState = OrderingReducer(type, state);
   }
+  return updatedState ? updatedState : state;
 };
 
 const ContextProvider = ({ children }: Props) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [state, dispatch] = useReducer(reducer, { bookList: List });
+
   return (
     <Context.Provider
       value={{

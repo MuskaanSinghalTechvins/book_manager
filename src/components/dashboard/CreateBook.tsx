@@ -2,7 +2,7 @@ import { Book, FormInput } from "@/types";
 import { Form, Formik } from "formik";
 import CustomInput from "../utils/CustomInput";
 import PrimaryButton from "../utils/PrimaryButton";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Context, UIContext } from "@/context";
 import * as Yup from "yup";
 
@@ -21,6 +21,7 @@ const schema = Yup.object({
 
 const CreateBook = () => {
   const { bookDispatcher } = useContext(Context);
+  const ref = useRef<any>(null);
   const {
     dispatch,
     uiState: { assets = {} },
@@ -32,6 +33,13 @@ const CreateBook = () => {
     genre: "",
   });
   const handleSubmit = (values: Book) => {
+    if (+values?.publication_year > 2024) {
+      ref.current?.setFieldError(
+        "publication_year",
+        "Please enter a valid year"
+      );
+      return;
+    }
     if (assets?.isEditable && values?.id) {
       bookDispatcher({
         type: "EDIT_BOOK",
@@ -55,6 +63,7 @@ const CreateBook = () => {
       onSubmit={handleSubmit}
       enableReinitialize={true}
       validationSchema={schema}
+      innerRef={ref}
     >
       {({ errors, touched }: FormInput) => (
         <Form className="w-[400px] p-4 rounded-[10px] shadow-3xl bg-white">
@@ -89,6 +98,8 @@ const CreateBook = () => {
               label: "Publication Year",
               containerStyles: "mb-4",
               placeholder: "Eg: 2024...",
+              minLength: 4,
+              maxLength: 4,
             }}
           />
           <CustomInput

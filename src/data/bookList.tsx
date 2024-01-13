@@ -7,6 +7,7 @@ export const List: Book[] = [
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
+    created_at: "2024-01-13T08:42:20.368Z",
   },
   {
     id: "book-2",
@@ -14,6 +15,7 @@ export const List: Book[] = [
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
+    created_at: "2024-01-13T08:42:20.368Z",
   },
   {
     id: "book-3",
@@ -21,6 +23,7 @@ export const List: Book[] = [
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
+    created_at: "2024-01-13T08:42:20.368Z",
   },
   {
     id: "book-4",
@@ -28,6 +31,7 @@ export const List: Book[] = [
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
+    created_at: "2024-01-13T08:42:20.368Z",
   },
   {
     id: "book-5",
@@ -35,6 +39,7 @@ export const List: Book[] = [
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
+    created_at: "2024-01-13T08:42:20.368Z",
   },
   {
     id: "book-6",
@@ -42,5 +47,6 @@ export const List: Book[] = [
     author: "RK Narayanan",
     publication_year: "2003",
     genre: "Fiction",
+    created_at: "2024-01-13T08:42:20.368Z",
   },
 ];

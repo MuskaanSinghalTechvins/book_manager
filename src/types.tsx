@@ -11,4 +11,23 @@ export interface Book {
   publication_year: string;
   genre: string;
   id?: string;
+  created_at?: string;
+}
+
+export interface choice {
+  label: string;
+  value: string;
+}
+
+export type action =
+  | "ADD_NEW_BOOK"
+  | "EDIT_BOOK"
+  | "DELETE_BOOK"
+  | "LATEST"
+  | "OLDEST"
+  | "PUBLICATION_YEAR"
+  | "PUBLICATION_YEAR_REVERSE";
+
+export interface GlobalState {
+  bookList: Book[];
 }
