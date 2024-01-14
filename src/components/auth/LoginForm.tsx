@@ -41,7 +41,7 @@ const LoginForm = () => {
       validationSchema={validationSchema}
     >
       {({ errors, touched }: FormInput) => (
-        <Form className="w-[400px] p-4 rounded-[10px] shadow-3xl bg-white bg-opacity-80">
+        <Form className="lg:w-[400px] w-[90%]  p-4 rounded-[10px] shadow-3xl bg-white bg-opacity-80">
           <h2 className="text-center text-lg mb-5 font-semibold">
             Sign Up / Sign In
           </h2>

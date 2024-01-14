@@ -72,11 +72,11 @@ const Dashboard = () => {
   }, [JSON.stringify(finalList), start]);
   return (
     <DashboardWrapper title="My Books">
-      <div className="flex justify-between items-center">
-        <PrimaryButton onClick={openForm} styles="w-[150px]">
+      <div className="lg:flex justify-between items-center">
+        <PrimaryButton onClick={openForm} styles="w-[150px] mb-4 lg:mb-0">
           Add New Book +
         </PrimaryButton>
-        <div className="flex justify-start items-center gap-x-4">
+        <div className="lg:flex justify-start items-center lg:gap-x-4 space-y-4 lg:space-y-0">
           <FilterBtn />
           <CustomSelect
             options={Sort_Options}
@@ -91,7 +91,7 @@ const Dashboard = () => {
       </p>
 
       {finalList?.length > 0 && (
-        <div className="grid grid-cols-3 gap-5 mt-8">
+        <div className="grid lg:grid-cols-3 grid-cols-1 gap-5 mt-8">
           {finalList.map((book: Book) => (
             <BookCard book={book} key={book.id} />
           ))}
