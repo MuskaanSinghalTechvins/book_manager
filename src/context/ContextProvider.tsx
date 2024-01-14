@@ -15,7 +15,6 @@ interface actionObj {
 
 const reducer = (state: GlobalState, action: actionObj) => {
   const { type, payload } = action;
-  console.log(type);
   let updatedState = CRUDReducer(type, payload, state);
   if (!updatedState) {
     updatedState = OrderingReducer(type, state);

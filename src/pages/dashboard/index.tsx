@@ -15,7 +15,14 @@ const PER_PAGE = 6;
 const Dashboard = () => {
   const { dispatch } = useContext(UIContext);
   const { bookList, bookDispatcher, filteredList } = useContext(Context);
-  const { sort, title, author, genre, year, start = 1 } = useRouter().query;
+  const {
+    sort = "LATEST",
+    title,
+    author,
+    genre,
+    year,
+    start = 1,
+  } = useRouter().query;
 
   const openForm = () => {
     dispatch({

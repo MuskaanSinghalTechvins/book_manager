@@ -19,6 +19,7 @@ const schema = Yup.object({
   genre: Yup.string()
     .required("This field is required")
     .matches(/^[a-zA-Z ]+$/),
+  description: Yup.string().required("This field is required"),
 });
 
 const CreateBook = () => {
@@ -77,7 +78,7 @@ const CreateBook = () => {
       innerRef={ref}
     >
       {({ errors, touched }: FormInput) => (
-        <Form className="w-[700px] p-4 rounded-[10px] shadow-3xl bg-white max-h-[calc(100vh-100px)] overflow-y-auto">
+        <Form className="lg:w-[700px] w-[300px] p-4 rounded-[10px] shadow-3xl bg-white max-h-[calc(100vh-100px)] overflow-y-auto">
           <h2 className="text-center text-lg mb-5 font-semibold">
             Add New Book
           </h2>
