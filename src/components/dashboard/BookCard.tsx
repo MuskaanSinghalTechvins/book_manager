@@ -1,6 +1,6 @@
 import { Context, UIContext } from "@/context";
 import { Book } from "@/types";
-import { formatDate } from "@/utility";
+import { formatDate, questionAlert } from "@/utility";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
@@ -26,6 +26,15 @@ const BookCard = ({ book }: Props) => {
   const deleteBook = (e: React.SyntheticEvent) => {
     bookDispatcher({ type: "DELETE_BOOK", payload: { bookId: id } });
     e.stopPropagation();
+  };
+
+  const deletePrompt = async (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    await questionAlert(
+      "Are you sure you want to delete this book?",
+      deleteBook,
+      e
+    );
   };
 
   const openDetail = () => {
@@ -58,7 +67,7 @@ const BookCard = ({ book }: Props) => {
         <button onClick={editBook}>
           <FontAwesomeIcon icon={faPen} />
         </button>
-        <button onClick={deleteBook}>
+        <button onClick={deletePrompt}>
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>

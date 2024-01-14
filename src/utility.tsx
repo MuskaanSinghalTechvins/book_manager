@@ -1,3 +1,4 @@
+import Swal, { SweetAlertIcon } from "sweetalert2";
 import { Book } from "./types";
 
 export const formatDate = (isoStr?: string) => {
@@ -55,4 +56,25 @@ export const updateBookList = (
     }
   }
   return list;
+};
+
+export const fireAlert = async (title: string, icon: SweetAlertIcon) => {
+  await Swal.fire({
+    title,
+    icon,
+    toast: true,
+    timer: 1500,
+    position: "top-left",
+  });
+};
+
+export const questionAlert = async (
+  title: string,
+  onSuccess: (e: React.SyntheticEvent) => any,
+  e: React.SyntheticEvent
+) => {
+  const canDelete = await Swal.fire({ title, icon: "question" });
+  if (canDelete.isConfirmed) {
+    onSuccess(e);
+  }
 };
