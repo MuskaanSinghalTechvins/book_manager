@@ -1,31 +1,38 @@
 import { GlobalState, action } from "@/types";
+import { checkIfObjectCanBeFiltered, updateBookList } from "@/utility";
 
 export const CRUDReducer = (type: action, payload: any, state: GlobalState) => {
   if (type === "ADD_NEW_BOOK") {
+    const newBook = {
+      id: crypto.randomUUID(),
+      created_at: new Date().toISOString(),
+      ...payload?.book,
+    };
     return {
       ...state,
-      bookList: [
-        {
-          id: crypto.randomUUID(),
-          created_at: new Date().toISOString(),
-          ...payload?.book,
-        },
-        ...state.bookList,
-      ],
+      filteredList: checkIfObjectCanBeFiltered(payload.book, payload.filters)
+        ? [newBook, ...state.filteredList]
+        : state.filteredList,
+      bookList: [newBook, ...state.bookList],
     };
   } else if (type === "EDIT_BOOK") {
     const bookId = payload.book.id;
-    const list = [...state.bookList];
-    const selectedBookIdx = state.bookList.findIndex(
-      (item) => item.id === bookId
+    const updatedBookList = updateBookList(
+      state.bookList,
+      bookId,
+      payload.book
     );
-    if (selectedBookIdx >= 0) {
-      list[selectedBookIdx] = { ...list[selectedBookIdx], ...payload.book };
-    }
+    const updatedFilteredList = updateBookList(
+      state.filteredList,
+      bookId,
+      payload.book,
+      payload.filters
+    );
 
     return {
       ...state,
-      bookList: list,
+      filteredList: updatedFilteredList,
+      bookList: updatedBookList,
     };
   } else if (type === "DELETE_BOOK") {
     const bookId = payload.bookId;
@@ -50,6 +57,7 @@ export const OrderingReducer = (type: action, state: GlobalState) => {
       return type === "LATEST" ? aSec - bSec : bSec - aSec;
     });
     return {
+      ...state,
       bookList: list,
     };
   }
@@ -61,7 +69,40 @@ export const OrderingReducer = (type: action, state: GlobalState) => {
         : +a.publication_year - +b.publication_year;
     });
     return {
+      ...state,
       bookList: list,
+    };
+  }
+};
+
+export const FilteringReducer = (
+  type: action,
+  payload: any,
+  state: GlobalState
+) => {
+  if (type === "FILTER") {
+    const { title, author, genre, year } = payload;
+    const titleRegex = new RegExp(title, "i");
+    const authorRegex = new RegExp(author, "i");
+    const genreRegex = new RegExp(genre, "i");
+    const { bookList } = state;
+    const list = bookList?.filter((item) => {
+      return (
+        (title ? item.title?.search(titleRegex) >= 0 : true) &&
+        (author ? item.author?.search(authorRegex) >= 0 : true) &&
+        (genre ? item.genre?.search(genreRegex) >= 0 : true) &&
+        (year ? +item.publication_year === +year : true)
+      );
+    });
+
+    return {
+      ...state,
+      filteredList: list,
+    };
+  } else if (type === "CLEAR_FILTERS") {
+    return {
+      ...state,
+      filteredList: [],
     };
   }
 };

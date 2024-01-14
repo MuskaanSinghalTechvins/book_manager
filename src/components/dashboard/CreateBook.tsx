@@ -5,6 +5,8 @@ import PrimaryButton from "../utils/PrimaryButton";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context, UIContext } from "@/context";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
+import { removeEmptyFieldsFromObject } from "@/utility";
 
 const schema = Yup.object({
   title: Yup.string().required("This field is required"),
@@ -32,6 +34,8 @@ const CreateBook = () => {
     publication_year: "",
     genre: "",
   });
+
+  const { title, author, genre, year } = useRouter().query;
   const handleSubmit = (values: Book) => {
     if (+values?.publication_year > 2024) {
       ref.current?.setFieldError(
@@ -40,13 +44,19 @@ const CreateBook = () => {
       );
       return;
     }
+    const filterObj = { title, author, genre, year };
+    const query = removeEmptyFieldsFromObject(filterObj);
+
     if (assets?.isEditable && values?.id) {
       bookDispatcher({
         type: "EDIT_BOOK",
-        payload: { book: values },
+        payload: { book: values, filters: query },
       });
     } else {
-      bookDispatcher({ type: "ADD_NEW_BOOK", payload: { book: values } });
+      bookDispatcher({
+        type: "ADD_NEW_BOOK",
+        payload: { book: values, filters: query },
+      });
     }
     dispatch({ type: "CLOSE_MODAL" });
   };

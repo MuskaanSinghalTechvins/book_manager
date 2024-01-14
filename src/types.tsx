@@ -26,8 +26,11 @@ export type action =
   | "LATEST"
   | "OLDEST"
   | "PUBLICATION_YEAR"
-  | "PUBLICATION_YEAR_REVERSE";
+  | "PUBLICATION_YEAR_REVERSE"
+  | "FILTER"
+  | "CLEAR_FILTERS";
 
 export interface GlobalState {
   bookList: Book[];
+  filteredList: Book[];
 }

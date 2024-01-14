@@ -4,12 +4,18 @@ import PrimaryButton from "@/components/utils/PrimaryButton";
 import CustomSelect from "@/components/utils/CustomSelect";
 import { Context, UIContext } from "@/context";
 import { Book } from "@/types";
-import { useContext } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { Sort_Options } from "@/data/constants";
+import FilterBtn from "@/components/utils/FilterBtn";
+import { useRouter } from "next/router";
+import Pagination from "@/components/utils/Pagination";
+
+const PER_PAGE = 6;
 
 const Dashboard = () => {
   const { dispatch } = useContext(UIContext);
-  const { bookList } = useContext(Context);
+  const { bookList, bookDispatcher, filteredList } = useContext(Context);
+  const { sort, title, author, genre, year, start = 1 } = useRouter().query;
 
   const openForm = () => {
     dispatch({
@@ -18,8 +24,52 @@ const Dashboard = () => {
     });
   };
 
-  console.log(bookList);
+  useEffect(() => {
+    if (sort) {
+      bookDispatcher({ type: sort });
+    }
+    if (title || author || genre || year) {
+      bookDispatcher({
+        type: "FILTER",
+        payload: {
+          title,
+          author,
+          genre,
+          year,
+        },
+      });
+    } else {
+      bookDispatcher({ type: "CLEAR_FILTERS", payload: {} });
+    }
+  }, [sort, title, author, genre, year]);
+  const getList = () => {
+    let list;
+    if (title || author || genre || year) {
+      list = filteredList;
+    } else {
+      list = bookList;
+    }
+    return list;
+  };
 
+  const finalList = useMemo(() => {
+    return getList().slice(+start - 1, +start - 1 + PER_PAGE);
+  }, [
+    title,
+    author,
+    genre,
+    year,
+    start,
+    JSON.stringify(bookList),
+    JSON.stringify(filteredList),
+  ]);
+
+  const nextPage = useMemo(() => {
+    const total = +start + finalList.length;
+    if (total <= getList().length) {
+      return total;
+    }
+  }, [finalList.length, start]);
   return (
     <DashboardWrapper>
       <div className="flex justify-between items-center">
@@ -27,7 +77,7 @@ const Dashboard = () => {
           Add New Book +
         </PrimaryButton>
         <div className="flex justify-start items-center gap-x-4">
-          <CustomSelect options={[]} label="Filter" placeholder="Select" />
+          <FilterBtn />
           <CustomSelect
             options={Sort_Options}
             label="Sort"
@@ -36,11 +86,20 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-5 mt-8">
-        {bookList.map((book: Book) => (
-          <BookCard book={book} key={book.id} />
-        ))}
-      </div>
+      {finalList?.length > 0 && (
+        <div className="grid grid-cols-3 gap-5 mt-8">
+          {finalList.map((book: Book) => (
+            <BookCard book={book} key={book.id} />
+          ))}
+        </div>
+      )}
+      {finalList?.length === 0 && (
+        <p className="text-lg font-semibold my-5 text-center h-[200px] flex justify-center items-center">
+          No books added yet
+        </p>
+      )}
+
+      <Pagination next={nextPage} prev={start !== 1} />
     </DashboardWrapper>
   );
 };
