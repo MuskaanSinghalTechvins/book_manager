@@ -33,6 +33,7 @@ const CreateBook = () => {
     author: "",
     publication_year: "",
     genre: "",
+    description: "",
   });
 
   const { title, author, genre, year } = useRouter().query;
@@ -76,7 +77,7 @@ const CreateBook = () => {
       innerRef={ref}
     >
       {({ errors, touched }: FormInput) => (
-        <Form className="w-[400px] p-4 rounded-[10px] shadow-3xl bg-white">
+        <Form className="w-[700px] p-4 rounded-[10px] shadow-3xl bg-white max-h-[calc(100vh-100px)] overflow-y-auto">
           <h2 className="text-center text-lg mb-5 font-semibold">
             Add New Book
           </h2>
@@ -120,6 +121,19 @@ const CreateBook = () => {
               label: "Genre",
               containerStyles: "mb-4",
               placeholder: "Eg: Fiction...",
+            }}
+          />
+
+          <CustomInput
+            {...{
+              errors,
+              touched,
+              name: "description",
+              label: "Description",
+              containerStyles: "mb-4",
+              placeholder: "Eg: Once upon a time...",
+              inputStyles: "min-h-[80px] max-h-[300px]",
+              as: "textarea",
             }}
           />
 

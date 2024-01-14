@@ -7,6 +7,7 @@ interface Props extends FormInput {
   placeholder?: string;
   label: string;
   containerStyles?: string;
+  inputStyles?: string;
 }
 
 const CustomInput = ({
@@ -15,6 +16,7 @@ const CustomInput = ({
   errors,
   touched,
   name,
+  inputStyles = "",
   ...props
 }: Props) => {
   return (
@@ -23,7 +25,7 @@ const CustomInput = ({
       <Field
         {...props}
         name={name}
-        className="w-full rounded-[10px] border shadow-3xl py-2 px-4"
+        className={`w-full rounded-[10px] border shadow-3xl py-2 px-4 ${inputStyles}`}
       />
       {errors[name] && touched[name] && (
         <p className="text-xs text-red-500 mt-2">{errors[name] as string}</p>

@@ -12,6 +12,7 @@ export interface Book {
   genre: string;
   id?: string;
   created_at?: string;
+  description: string;
 }
 
 export interface choice {

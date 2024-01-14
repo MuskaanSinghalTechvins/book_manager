@@ -37,9 +37,12 @@ export const CRUDReducer = (type: action, payload: any, state: GlobalState) => {
   } else if (type === "DELETE_BOOK") {
     const bookId = payload.bookId;
     const list = state.bookList?.filter((item) => item.id !== bookId);
-    console.log(list);
+    const filteredList = state.filteredList?.filter(
+      (item) => item.id !== bookId
+    );
     return {
       ...state,
+      filteredList,
       bookList: list,
     };
   }

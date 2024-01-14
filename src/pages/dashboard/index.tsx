@@ -69,9 +69,9 @@ const Dashboard = () => {
     if (total <= getList().length) {
       return total;
     }
-  }, [finalList.length, start]);
+  }, [JSON.stringify(finalList), start]);
   return (
-    <DashboardWrapper>
+    <DashboardWrapper title="My Books">
       <div className="flex justify-between items-center">
         <PrimaryButton onClick={openForm} styles="w-[150px]">
           Add New Book +
@@ -85,6 +85,10 @@ const Dashboard = () => {
           />
         </div>
       </div>
+
+      <p className="text-lg font-semibold my-5">
+        Total books: {getList()?.length}
+      </p>
 
       {finalList?.length > 0 && (
         <div className="grid grid-cols-3 gap-5 mt-8">
