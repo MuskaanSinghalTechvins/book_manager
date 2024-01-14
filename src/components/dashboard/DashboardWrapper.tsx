@@ -18,7 +18,7 @@ const DashboardWrapper = ({ children, containerStyles = "", title }: Props) => {
   return (
     <div className=" bg-secondary min-h-screen">
       <header className="imageBg">
-        <div className="lg:max-w-[1280px] lg:mx-auto grid grid-cols-3 p-2 ">
+        <div className="lg:max-w-[1280px] lg:mx-auto grid grid-cols-3 px-2 lg:px-[50px] ">
           <h1 className="h-[100px] text-center lg;text-[36px] lg:leading-[41px] text-[28px] font-bold text-white  flex justify-center items-center drop-shadow-lg col-start-2 ">
             {title}
           </h1>

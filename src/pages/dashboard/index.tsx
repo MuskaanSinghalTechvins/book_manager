@@ -9,18 +9,20 @@ import { Sort_Options } from "@/data/constants";
 import FilterBtn from "@/components/utils/FilterBtn";
 import { useRouter } from "next/router";
 import Pagination from "@/components/utils/Pagination";
-
+// Per page count
 const PER_PAGE = 6;
 
 const Dashboard = () => {
   const { dispatch } = useContext(UIContext);
   const { bookList, bookDispatcher, filteredList } = useContext(Context);
   const {
+    // By default sorting based on creation date
     sort = "LATEST",
     title,
     author,
     genre,
     year,
+    // starting count per page
     start = 1,
   } = useRouter().query;
 
@@ -49,6 +51,7 @@ const Dashboard = () => {
       bookDispatcher({ type: "CLEAR_FILTERS", payload: {} });
     }
   }, [sort, title, author, genre, year]);
+
   const getList = () => {
     let list;
     if (title || author || genre || year) {
@@ -77,6 +80,7 @@ const Dashboard = () => {
       return total;
     }
   }, [JSON.stringify(finalList), start]);
+
   return (
     <DashboardWrapper title="My Books">
       <div className="lg:flex justify-between items-center">

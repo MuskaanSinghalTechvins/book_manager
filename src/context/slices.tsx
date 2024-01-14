@@ -1,22 +1,31 @@
 import { GlobalState, action } from "@/types";
 import { checkIfObjectCanBeFiltered, updateBookList } from "@/utility";
 
+// Code for handling states related to books
+
+// Helper function for books related CRUD
 export const CRUDReducer = (type: action, payload: any, state: GlobalState) => {
+  // For book creation
   if (type === "ADD_NEW_BOOK") {
     const newBook = {
+      // generate id for newly created book
       id: crypto.randomUUID(),
+      // creation date
       created_at: new Date().toISOString(),
       ...payload?.book,
     };
     return {
       ...state,
+      // check if new object satisfies the filter applied then append into the list
       filteredList: checkIfObjectCanBeFiltered(payload.book, payload.filters)
         ? [newBook, ...state.filteredList]
         : state.filteredList,
+      // adding new book to global list
       bookList: [newBook, ...state.bookList],
     };
   } else if (type === "EDIT_BOOK") {
     const bookId = payload.book.id;
+    // update book based on id
     const updatedBookList = updateBookList(
       state.bookList,
       bookId,
@@ -52,7 +61,9 @@ const getTimestamp = (iso?: string) => {
   return iso ? new Date(iso)?.getTime() : 0;
 };
 
+// Helper function for handling ordering of books
 export const OrderingReducer = (type: action, state: GlobalState) => {
+  // Filtering based on creation date
   if (type === "LATEST" || type === "OLDEST") {
     const list = state.bookList?.sort((b, a) => {
       const bSec = getTimestamp(b.created_at);
@@ -65,6 +76,7 @@ export const OrderingReducer = (type: action, state: GlobalState) => {
     };
   }
   //   DESCENDING
+  // Filtering based on publication year
   else if (type === "PUBLICATION_YEAR" || type === "PUBLICATION_YEAR_REVERSE") {
     const list = state.bookList?.sort((b, a) => {
       return type === "PUBLICATION_YEAR"
@@ -78,6 +90,7 @@ export const OrderingReducer = (type: action, state: GlobalState) => {
   }
 };
 
+// Helper function for handling filtering of books
 export const FilteringReducer = (
   type: action,
   payload: any,

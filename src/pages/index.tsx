@@ -1,5 +1,4 @@
 import LoginForm from "@/components/auth/LoginForm";
-import { Lato } from "next/font/google";
 import Image from "next/image";
 import loginImg from "@/assets/login_img.jpg";
 

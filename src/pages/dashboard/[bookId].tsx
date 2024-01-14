@@ -35,7 +35,7 @@ const BookDetail = () => {
       <Tab label="Publication Year" value={bookDetail?.publication_year} />
       <Tab label="Genre" value={bookDetail?.genre} />
       <Tab label="Description" value={bookDetail?.description || "-"} />
-
+      {/* for UI */}
       <Image
         src={"/books.jpg"}
         alt="image of books"
