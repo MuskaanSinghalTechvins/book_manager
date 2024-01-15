@@ -37,9 +37,10 @@ const FilterBtn = () => {
 
   const onSubmit = (values: State) => {
     const query = removeEmptyFieldsFromObject(values);
+    const { start, ...rest } = router.query;
     router.push({
       pathname: router.pathname,
-      query: { ...router.query, ...query },
+      query: { ...rest, ...query },
     });
     setOpen(false);
   };

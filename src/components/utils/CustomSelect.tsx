@@ -19,12 +19,13 @@ const CustomSelect = ({ label, options, placeholder }: Props) => {
     setSelected((sort as string) || "");
   }, [sort]);
   const handleSelect = (e: React.SyntheticEvent) => {
+    const { start, ...rest } = router.query;
     const value = (e.target as HTMLInputElement).value;
     setSelected(value);
     if (value) {
       router.push({
         pathname: router.pathname,
-        query: { ...router.query, sort: value },
+        query: { ...rest, sort: value },
       });
     }
   };

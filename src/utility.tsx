@@ -10,6 +10,7 @@ export const formatDate = (isoStr?: string) => {
   return date;
 };
 
+// remove fields from object which do not have a truthy value
 export const removeEmptyFieldsFromObject = (input: any) => {
   const output: any = {};
   for (let key in input) {
@@ -21,6 +22,7 @@ export const removeEmptyFieldsFromObject = (input: any) => {
   return output;
 };
 
+// checks if input object satisfies the filter conditions
 export const checkIfObjectCanBeFiltered = (inp: any, filterObj: any) => {
   const { title, author, genre, year } = filterObj;
   const titleRegex = new RegExp(title, "i");

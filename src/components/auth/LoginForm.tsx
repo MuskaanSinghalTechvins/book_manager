@@ -11,6 +11,10 @@ const validationSchema = Yup.object({
     .required("This field is required"),
   password: Yup.string()
     .required("This field is required")
+    .matches(
+      /^(?=.*\d)(?=.*[!@#$%^&*?_])(?=.*[a-z])(?=.*[A-Z]).{7,}$/,
+      "Atleast 1 uppercase, smallcase  letter, digit, special character is required"
+    )
     .min(7, "Atleast 7 characters are required")
     .max(20, "Atmost 20 chars are allowed"),
 });
@@ -40,7 +44,7 @@ const LoginForm = () => {
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      {({ errors, touched }: FormInput) => (
+      {({ errors, touched, values }: FormInput) => (
         <Form className="lg:w-[400px] w-[90%]  p-4 rounded-[10px] shadow-3xl bg-white bg-opacity-80">
           <h2 className="text-center text-lg mb-5 font-semibold">
             Sign Up / Sign In
@@ -54,16 +58,19 @@ const LoginForm = () => {
               containerStyles: "mb-4",
             }}
           />
-          <CustomInput
-            {...{
-              errors,
-              touched,
-              name: "password",
-              label: "Password",
-              type: "password",
-              containerStyles: "mb-[30px]",
-            }}
-          />
+          <div className="relative">
+            <CustomInput
+              {...{
+                errors,
+                touched,
+                name: "password",
+                label: "Password",
+                type: "password",
+                containerStyles: "mb-[30px]",
+                values,
+              }}
+            />
+          </div>
           <PrimaryButton styles="block mx-auto" type="submit">
             Submit
           </PrimaryButton>

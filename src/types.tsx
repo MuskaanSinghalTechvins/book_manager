@@ -1,8 +1,9 @@
-import { FormikErrors, FormikTouched } from "formik";
+import { FormikErrors, FormikTouched, FormikValues } from "formik";
 
 export interface FormInput {
   errors: FormikErrors<{ [field: string]: any }>;
   touched: FormikTouched<{ [field: string]: any }>;
+  values?: FormikValues;
 }
 
 export interface Book {
